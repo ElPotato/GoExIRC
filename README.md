@@ -12,3 +12,4 @@ A small node which execute bash commands received VIA IRC.
 * resolve auto-start/ systemd problem
 * add files transport
 * encryption?
+* resolve private message communication
