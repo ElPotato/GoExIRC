@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net"
 	"fmt" // debug
+	"net"
 	"os/exec"
 	"strings"
 
@@ -15,18 +15,11 @@ const (
 )
 
 func main() {
-	config := irc.ClientConfig{
-		Nick: "Z",
-		Pass: "password",
-		User: "username",
-		Name: "Full Name",
-		Handler: irc.HandlerFunc(handler),
-	}
+	go connect(SRVADDR, irc.ClientConfig{
+		Nick: "Z", Pass: "password", User: "username", Name: "Full Name",
+		Handler: irc.HandlerFunc(handler)})
 
-	go connect(SRVADDR, config)
-	
-	// hax
-	fmt.Println("Whoa!"); select{}
+	fmt.Println("Whoa!"); select {}
 }
 
 func handler(c *irc.Client, m *irc.Message) {
