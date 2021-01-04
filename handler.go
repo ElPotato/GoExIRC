@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-
 	irc "gopkg.in/irc.v3"
 )
 

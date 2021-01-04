@@ -1,13 +1,6 @@
 package main
 
-import (
-	"fmt" // debug
-	"net"
-	"os/exec"
-	"strings"
-
-	irc "gopkg.in/irc.v3"
-)
+import irc "gopkg.in/irc.v3"
 
 const (
 	SRVADDR string = "chat.freenode.net:6667"
@@ -24,25 +17,4 @@ func main() {
 		Handler: irc.HandlerFunc(handler)})
 
 	select {} // prevent exit
-}
-
-func executeCommand(input string) string {
-	cmd, params := splitParams(input)
-	out, _ := exec.Command(cmd, params...).Output()
-
-	fmt.Printf("debug executing: %v, %v\n", cmd, params)
-
-	return strings.ReplaceAll(string(out), "\n", " \\n ")
-}
-
-func connect(srv string, cfg irc.ClientConfig) {
-	conn, _ := net.Dial("tcp", srv) // retry here
-
-	client := irc.NewClient(conn, cfg)
-	_ = client.Run()
-}
-
-func splitParams(line string) (string, []string) {
-	params := strings.Split(line, " ")
-	return params[0], params[1:]
 }
