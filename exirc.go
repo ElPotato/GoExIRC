@@ -44,11 +44,5 @@ func connect(srv string, cfg irc.ClientConfig) {
 
 func splitParams(line string) (string, []string) {
 	params := strings.Split(line, " ")
-	cmd := params[0]
-
-	copy(params[0:], params[1:])
-	params[len(params)-1] = ""
-	params = params[:len(params)-1]
-
-	return cmd, params
+	return params[0], params[1:]
 }
