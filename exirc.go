@@ -9,6 +9,11 @@ import (
 	irc "gopkg.in/irc.v3"
 )
 
+const (
+	SRVADDR string = "chat.freenode.net:6667"
+	CHANNEL string = "#yyyzzzxxx"
+)
+
 func main() {
 	config := irc.ClientConfig{
 		Nick: "Z",
@@ -18,15 +23,15 @@ func main() {
 		Handler: irc.HandlerFunc(handler),
 	}
 
-	go connect("chat.freenode.net:6667", config)
-
+	go connect(SRVADDR, config)
+	
 	// hax
 	fmt.Println("Whoa!"); select{}
 }
 
 func handler(c *irc.Client, m *irc.Message) {
 	if m.Command == "001" {
-		c.Write("JOIN #yyyzzzxxx")
+		c.Write("JOIN" + CHANNEL)
 	} else if m.Command == "PRIVMSG" && c.FromChannel(m) {
 		c.WriteMessage(&irc.Message{
 			Command: "PRIVMSG",
