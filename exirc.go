@@ -28,7 +28,7 @@ func main() {
 
 func handler(c *irc.Client, m *irc.Message) {
 	if m.Command == "001" {
-		c.Write("JOIN" + CHANNEL)
+		c.Write("JOIN " + CHANNEL)
 	} else if m.Command == "PRIVMSG" && c.FromChannel(m) {
 		c.WriteMessage(&irc.Message{
 			Command: "PRIVMSG",
