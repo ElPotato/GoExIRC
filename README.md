@@ -6,7 +6,7 @@ A small node which execute bash commands received VIA IRC.
 
 * retry-dial function if error occur
 * add auto remove option, binary
-* generate id, store in fs
+* generate id, store? watermark binary?
 * resolve auto-start/ systemd problem
 * add files transport
 * encryption?
