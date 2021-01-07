@@ -11,6 +11,16 @@ func connect(srv string, cfg irc.ClientConfig) {
 		connect(srv, cfg)
 	}
 
+	if err := client(conn, cfg); err != nil {
+		client(conn, cfg)
+	}
+}
+
+func client(conn net.Conn, cfg irc.ClientConfig) error {
 	client := irc.NewClient(conn, cfg)
-	_ = client.Run()
+	if err := client.Run(); err != nil {
+		return err
+	}
+	
+	return nil
 }
