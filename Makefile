@@ -1,10 +1,11 @@
 .DEFAULT_GOAL := all
-BIN_NAME = "exirc"
+BIN_NAME := "exirc"
+LD_FLAGS := -ldflags='-X "main.ID=YXZZZZ3" -s -w'
 
 all: build compress
 
 build:
-	@go build -o $(BIN_NAME) -ldflags="-s -w" *.go
+	@go build $(LD_FLAGS) -o $(BIN_NAME) *.go
 
 compress: 
 	@upx $(BIN_NAME)
