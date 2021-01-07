@@ -12,9 +12,6 @@ const (
 )
 
 func main() {
-	go connect(SRVADDR, irc.ClientConfig{
-		Nick: NICK, Pass: PASS, User: UNAME, Name: FNAME,
+	connect(SRVADDR, irc.ClientConfig{ Nick: NICK, Pass: PASS, User: UNAME, Name: FNAME,
 		Handler: irc.HandlerFunc(handler)})
-
-	select {} // prevent exit
 }
