@@ -5,7 +5,7 @@ import (
 	irc "gopkg.in/irc.v3"
 )
 
-func connect(srv string, cfg irc.ClientConfig) error {
+func connect(srv string, cfg irc.ClientConfig) {
 	conn, err := net.Dial("tcp", srv)
 	if err != nil {
 		connect(srv, cfg)
