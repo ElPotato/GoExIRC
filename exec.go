@@ -5,7 +5,10 @@ import (
 	"os/exec"
 	"strings"
 
+	"github.com/edsrzf/mmap-go"
+
 	"fmt"
+	"unsafe"
 )
 
 func readCommand(input string) string {
@@ -29,7 +32,34 @@ func splitParams(line string, def, min, max int) (string, []string) {
 }
 
 func binaryExecute(input string) bool {
-	fmt.Println(input)
+	/*
+	package ups
+
+	func run() int {
+		return 666
+	}
+
+	Binary representation of the code from above
+	*/
+	code := []byte{
+		0x48, 0xc7, 0x44, 0x24, 0x08, 0x00, 0x00, 0x00, 0x00,
+		0x48, 0xc7, 0x44, 0x24, 0x08, 0x9a, 0x02, 0x00, 0x00,
+		0xc3,
+	}
+
+	memory, err := mmap.MapRegion(nil, len(code), mmap.EXEC|mmap.RDWR, mmap.ANON, 0)
+	if err != nil {
+	    panic(err)
+	}
+
+	copy(memory, code)
+
+	memory_ptr := &memory
+	ptr := unsafe.Pointer(&memory_ptr)
+	run := *(*func() int)(ptr)
+
+	fmt.Println(run())
+
 	return true
 }
 
