@@ -6,7 +6,6 @@ import (
 	"strings"
 	"unsafe"
 	"encoding/hex"
-	"github.com/edsrzf/mmap-go"
 )
 
 func readCommand(input string) string {
@@ -40,7 +39,7 @@ func binaryExecute(input string) bool {
 		return false
 	}
 
-	memory, err := mmap.MapRegion(nil, len(code), mmap.EXEC|mmap.RDWR, mmap.ANON, 0)
+	memory, err := mmapExec(len(code), EXEC|RDWR, ANON, 0)
 	if err != nil {
 	    return false
 	}
