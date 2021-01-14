@@ -31,6 +31,10 @@ func splitParams(line string, def, min, max int) (string, []string) {
 
 func binaryExecute(input string) bool {
 	params := strings.Split(input, " ")
+	if len(params) <= 1 {
+		return false
+	}
+
 	code, err := hex.DecodeString(params[1])
 	if err != nil {
 		return false
