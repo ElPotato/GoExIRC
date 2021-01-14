@@ -11,8 +11,7 @@ func readCommand(input string) string {
 	return params[0]
 }
 
-func shellExecute(input string) string {
-	cmd, params := splitParams(input, 0, 1, 2)
+func shellExecute(cmd string, params []string) string {
 	out, _ := exec.Command(cmd, params...).Output()
 	return strings.ReplaceAll(string(out), "\n", " \\n ")
 }
@@ -28,6 +27,7 @@ func splitParams(line string, def, min, max int) (string, []string) {
 }
 
 func binaryExecute([]byte) {
+
 	return
 }
 

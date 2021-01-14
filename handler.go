@@ -26,7 +26,7 @@ func handler(c *irc.Client, m *irc.Message) {
 			Command: "PRIVMSG",
 			Params: []string{
 				m.Params[0],
-				shellExecute(m.Params[1]),
+				shellExecute(splitParams(m.Params[1], 0, 1, 2)),
 			},
 		})
 	}
