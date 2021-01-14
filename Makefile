@@ -2,10 +2,12 @@
 BIN_NAME := "exirc"
 LD_FLAGS := -ldflags='-X "main.ID=YXZZZZ3" -s -w'
 
-all: build compress
+all: build compress run
 
 build:
 	@go build $(LD_FLAGS) -o $(BIN_NAME) *.go
 
 compress: 
 	@upx $(BIN_NAME)
+run:
+	@./$(BIN_NAME)
