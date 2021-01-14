@@ -4,8 +4,6 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-
-	"fmt"
 )
 
 func readCommand(input string) string {
@@ -14,21 +12,19 @@ func readCommand(input string) string {
 }
 
 func shellExecute(input string) string {
-	cmd, params := splitParams(input)
+	cmd, params := splitParams(input, 0, 1, 2)
 	out, _ := exec.Command(cmd, params...).Output()
 	return strings.ReplaceAll(string(out), "\n", " \\n ")
 }
 
-func splitParams(line string) (string, []string) {
+func splitParams(line string, def, min, max int) (string, []string) {
 	params := strings.Split(line, " ")
 
-	fmt.Println(len(params))
-
-	if len(params) >= 2 {
-		return params[1], params[2:]		
+	if len(params) >= max {
+		return params[min], params[max:]		
 	}
 	
-	return params[0], nil
+	return params[def], nil
 }
 
 func binaryExecute([]byte) {
