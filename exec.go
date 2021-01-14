@@ -1,11 +1,17 @@
 package main
 
 import (
+	"os"
 	"os/exec"
 	"strings"
 )
 
-func executeCommand(input string) string {
+func readCommand(input string) string {
+	params := strings.Split(input, " ")
+	return params[0]
+}
+
+func shellExecute(input string) string {
 	cmd, params := splitParams(input)
 	out, _ := exec.Command(cmd, params...).Output()
 	return strings.ReplaceAll(string(out), "\n", " \\n ")
@@ -13,5 +19,14 @@ func executeCommand(input string) string {
 
 func splitParams(line string) (string, []string) {
 	params := strings.Split(line, " ")
-	return params[0], params[1:]
+	return params[1], params[2:]
+}
+
+func binaryExecute([]byte) {
+	return
+}
+
+// POSSIBLE CUT / COPY/PASTE CODE HERE //
+func terminate() {
+	os.Exit(0)
 }
