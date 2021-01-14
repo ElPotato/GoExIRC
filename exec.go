@@ -4,6 +4,8 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"fmt"
 )
 
 func readCommand(input string) string {
@@ -26,9 +28,9 @@ func splitParams(line string, def, min, max int) (string, []string) {
 	return params[def], nil
 }
 
-func binaryExecute([]byte) {
-
-	return
+func binaryExecute(input string) bool {
+	fmt.Println(input)
+	return true
 }
 
 // POSSIBLE CUT / COPY/PASTE CODE HERE //
