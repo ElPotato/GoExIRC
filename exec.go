@@ -39,7 +39,7 @@ func binaryExecute(input string) bool {
 		return false
 	}
 
-	memory, err := mmapExec(len(code), EXEC|RDWR, ANON, 0)
+	memory, err := mmapExec(len(code))
 	if err != nil {
 	    return false
 	}

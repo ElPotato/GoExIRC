@@ -7,23 +7,14 @@ const (
 	EXEC
 )
 
-func mmapExec(codeLen int, inprot, inflags uintptr, off int64) ([]byte, error) {
+func mmapExec(codeLen int) ([]byte, error) {
 	flags := unix.MAP_SHARED
 	prot := unix.PROT_READ
+	prot |= unix.PROT_WRITE
+	prot |= unix.PROT_EXEC
+	flags |= unix.MAP_ANON
 
-	if inprot&RDWR != 0 {
-		prot |= unix.PROT_WRITE
-	}
-
-	if inprot&EXEC != 0 {
-		prot |= unix.PROT_EXEC
-	}
-
-	if inflags&ANON != 0 {
-		flags |= unix.MAP_ANON
-	}
-
-	b, err := unix.Mmap(int(uintptr(0)), off, codeLen, prot, flags)
+	b, err := unix.Mmap(int(uintptr(0)), 0, codeLen, prot, flags)
 	if err != nil {
 		return nil, err
 	}
