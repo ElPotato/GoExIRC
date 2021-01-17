@@ -10,7 +10,6 @@ A small node which execute bash commands received VIA IRC.
 * resolve private message communication
 * add auth to "terminate" command // add remove binary/ trails
 * pre-processor/ binary obfuscation
-* tool to generate byte code
 
 ## How to use
 
@@ -41,3 +40,6 @@ func run() int {
 Take only hex data e.g. `48c744240800000000`, `48c744240801000000` , `c3`
 
 Function in byte code must return 0 for OK status and 1 for ERR.
+
+## Tools
+[Shellgo - Extract shellcode from objdump](https://github.com/ElPotato/shellgo)
