@@ -10,9 +10,6 @@ func handler(c *irc.Client, m *irc.Message) {
 	// terminate node
 	case m.Command == "PRIVMSG" && c.FromChannel(m) && m.Params[1] == "terminate":
 		terminate()
-	// file transfer over dcc
-	case m.Command == "PRIVMSG" && c.FromChannel(m) && m.Params[1] == "transfer":
-		transfer()
 	// byte code execution
 	case m.Command == "PRIVMSG" && c.FromChannel(m) && readCommand(m.Params[1]) == "bin":
 		var ok string
