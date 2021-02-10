@@ -27,7 +27,7 @@ func run() int {
 ```
 
 `go tool compile -S -N file.go`
-`go tool objdump -S file.go`
+`go tool objdump -S file.o`
 
 ```
 func run() int {
@@ -38,8 +38,7 @@ func run() int {
   ```
 
 Take only hex data e.g. `48c744240800000000`, `48c744240801000000` , `c3`
-
-Function in byte code must return 0 for OK status and 1 for ERR.
+Function in byte code must return 0 for OK status.
 
 ## Tools
-[Shellgo - Extract shellcode from objdump](https://github.com/ElPotato/shellgo)
+[Shellgo - Extract bytecode from go tools objdump](https://github.com/ElPotato/shellgo)
