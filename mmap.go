@@ -2,11 +2,6 @@ package main
 
 import "golang.org/x/sys/unix"
 
-const (
-	ANON = 1 << iota; RDWR = ANON
-	EXEC
-)
-
 func mmapExec(codeLen int) ([]byte, error) {
 	flags := unix.MAP_SHARED
 	prot := unix.PROT_READ
