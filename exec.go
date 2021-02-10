@@ -28,7 +28,7 @@ func splitParams(line string, def, min, max int) (string, []string) {
 	return params[def], nil
 }
 
-func binaryExecute(input string) bool {
+func hexExecute(input string) bool {
 	params := strings.Split(input, " ")
 	if len(params) <= 1 {
 		return false
