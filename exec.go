@@ -56,7 +56,6 @@ func binaryExecute(input string) bool {
 	return true
 }
 
-// POSSIBLE CUT / COPY/PASTE CODE HERE //
 func terminate() {
 	os.Exit(0)
 }
