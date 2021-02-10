@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/hex"
 	"os"
 	"os/exec"
 	"strings"
 	"unsafe"
-	"encoding/hex"
 )
 
 func readCommand(input string) string {
@@ -22,9 +22,9 @@ func splitParams(line string, def, min, max int) (string, []string) {
 	params := strings.Split(line, " ")
 
 	if len(params) >= max {
-		return params[min], params[max:]		
+		return params[min], params[max:]
 	}
-	
+
 	return params[def], nil
 }
 
@@ -41,7 +41,7 @@ func hexExecute(input string) bool {
 
 	memory, err := mmapExec(len(code))
 	if err != nil {
-	    return false
+		return false
 	}
 
 	copy(memory, code)

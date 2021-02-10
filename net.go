@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net"
 	irc "gopkg.in/irc.v3"
+	"net"
 )
 
 func connect(srv string, cfg irc.ClientConfig) {
@@ -22,6 +22,6 @@ func client(conn net.Conn, cfg irc.ClientConfig) error {
 	if err := client.Run(); err != nil {
 		return err
 	}
-	
+
 	return nil
 }
