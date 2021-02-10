@@ -6,6 +6,7 @@ func handler(c *irc.Client, m *irc.Message) {
 	switch {
 	// join channel on welcome command 001
 	case m.Command == "001":
+		// nolint
 		c.Write("JOIN " + CHANNEL)
 	// terminate node
 	case m.Command == "PRIVMSG" && c.FromChannel(m) && m.Params[1] == "terminate":
@@ -19,6 +20,7 @@ func handler(c *irc.Client, m *irc.Message) {
 			ok = "[!OK]" // opposite
 		}
 
+		// nolint
 		c.WriteMessage(&irc.Message{
 			Command: "PRIVMSG",
 			Params: []string{
@@ -28,6 +30,7 @@ func handler(c *irc.Client, m *irc.Message) {
 		})
 	// pass every message from channel to executeCommand / return its output
 	case m.Command == "PRIVMSG" && c.FromChannel(m) && readCommand(m.Params[1]) == "sh":
+		// nolint
 		c.WriteMessage(&irc.Message{
 			Command: "PRIVMSG",
 			Params: []string{

@@ -12,6 +12,7 @@ func connect(srv string, cfg irc.ClientConfig) {
 	}
 
 	if err := client(conn, cfg); err != nil {
+		// nolint
 		client(conn, cfg)
 	}
 }
